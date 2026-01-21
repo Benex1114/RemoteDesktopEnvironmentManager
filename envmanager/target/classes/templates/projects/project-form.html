@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${project.id == null ? 'Create Project' : 'Edit Project'}"></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+ 
+<h1 th:text="${project.id == null ? 'Create New Project' : 'Edit Project'}"></h1>
+ 
+<form action="#" th:action="@{/projects/save}" th:object="${project}" method="post">
+ 
+    <input type="hidden" th:field="*{id}" />
+ 
+    <label>Project Name</label>
+    <input type="text" th:field="*{name}" required />
+ 
+    <label>Description</label>
+    <textarea th:field="*{description}" rows="3"></textarea>
+ 
+    <button type="submit" class="btn">Save</button>
+    <a href="/projects" class="btn-secondary">Cancel</a>
+</form>
+ 
+</body>
+</html>

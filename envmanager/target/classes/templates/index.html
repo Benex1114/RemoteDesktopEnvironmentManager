@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>RSEM</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #9ac7f5, #6882ba);
+            font-family: Arial, sans-serif;
+            color: #053f66;
+        }
+ 
+        .container {
+            text-align: center;
+        }
+ 
+        .logo {
+            width: 400px;
+            margin-bottom: px;
+        }
+ 
+        h1 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+ 
+        .btn {
+            padding: 14px 32px;
+            font-size: 18px;
+            color: white;
+            background: #2563eb;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+ 
+        .btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        /*This is for Account drop down which is on the top right of the page*/
+        .account-menu {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            display: inline-block;
+        }
+
+        .account-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .account-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            min-width: 150px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        .account-menu:hover .account-dropdown{
+            display: block;
+        }
+
+        .account-dropdown p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .account-dropdown .role {
+            color: #666;
+            font-size: 12px;
+        }
+        
+    </style>
+</head>
+<body>
+ 
+<div class="container">
+    <img src="/images/RSEM.png" alt="RSEM Logo" class="logo">
+    <h1>RSEM</h1>
+    <a href="/projects" class="btn">Go to Projects</a>
+    <div class="account-menu" sec:authorize="isAuthenticated()">
+        <button class="account-btn">👤</button>
+        <div class="account-dropdown">
+            <p><b sec:authentication="name"></b></p>
+            <p class="role" sec:authentication="principal.authorities"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-logout">Sign Out</button>
+            </form>
+        </div>
+    </div>
+</div>
+ 
+</body>
+</html>

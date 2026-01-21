@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Item Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body onload="toggleFields()">
+ 
+<h2 th:text="${item.id == null ? 'Add Item' : 'Edit Item'}"></h2>
+ 
+<form th:action="@{/projects/{pid}/items/save(pid=${projectId})}"
+      th:object="${item}"
+      method="post"
+      enctype="multipart/form-data">
+ 
+    <input type="hidden" th:field="*{id}" />
+ 
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required />
+ 
+    <label>Type:</label>
+    <select th:field="*{type}" id="type" onchange="toggleFields()">
+        <option th:each="t : ${types}"
+                th:value="${t}"
+                th:text="${t}">
+        </option>
+    </select>
+ 
+    <!-- LINK FIELDS -->
+    <div id="linkFields">
+        <label>URL:</label>
+        <input type="text" th:field="*{url}" />
+    </div>
+ 
+    <!-- SOP FIELDS -->
+    <div id="sopFields">
+        <label>Upload SOP:</label>
+        <input type="file" name="file" />
+    </div>
+ 
+    <br>
+ 
+    <button class="btn" type="submit">Save</button>
+    <button class="btn-secondary" th:href="@{/projects/{pid}/items(pid=${projectId})}">Cancel</button>
+</form>
+ 
+<script>
+function toggleFields() {
+    const type = document.getElementById("type").value;
+ 
+    document.getElementById("linkFields").style.display =
+        type === 'LINK' ? 'block' : 'none';
+ 
+    document.getElementById("sopFields").style.display =
+        type === 'SOP' ? 'block' : 'none';
+}
+</script>
+ 
+</body>
+</html>

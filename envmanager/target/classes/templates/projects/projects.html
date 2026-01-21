@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Projects</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h2>Projects</h2>
+ 
+<a class="btn" sec:authorize="hasRole('ADMIN')" href="/projects/new">+ Create Project</a>
+ 
+<div class="project-grid">
+
+  <div class="account-menu" sec:authorize="isAuthenticated()">
+        <button class="account-btn">👤</button>
+        <div class="account-dropdown">
+            <p><b sec:authentication="name"></b></p>
+            <p class="role" sec:authentication="principal.authorities"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-logout">Sign Out</button>
+            </form>
+        </div>
+    </div>
+  
+  <div class="project-card" th:each="project : ${projects}">
+    <h3 th:text="${project.name}">Project Name</h3>
+    <p th:text="${project.description}">Description</p>
+ 
+    <div class="card-actions">
+      <a th:href="@{/projects/{id}/items(id=${project.id})}" class="btn">Open</a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/projects/edit/{id}(id=${project.id})}" class="btn-secondary">Edit</a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/projects/delete/{id}(id=${project.id})}" class="btn-danger"
+      onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+    </div>
+  </div>
+</div>
+ 
+</body>
+</html>

@@ -1,0 +1,308 @@
+/* ---------- Global ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+ 
+body {
+  background: linear-gradient(135deg, #6882ba, #9ac7f5);
+  min-height: 100vh;
+  color: #2c3e50;
+}
+ 
+a {
+  text-decoration: none;
+}
+ 
+/* ---------- Containers ---------- */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px;
+}
+ 
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background-color: #4f6bed;
+  color: white;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+ 
+.btn:hover {
+  background-color: #3c56c4;
+  transform: translateY(-1px);
+}
+ 
+.btn-secondary {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background-color: #6c757d;
+  color: white;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+ 
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+ 
+.btn-danger {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+ 
+.btn-danger:hover {
+  background-color: #b52a37;
+  transform: translateY(-1px);
+}
+ 
+/* ---------- Homepage ---------- */
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+}
+ 
+.home-wrapper img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+ 
+.home-wrapper h1 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+ 
+.home-wrapper .btn {
+  font-size: 1rem;
+  padding: 12px 22px;
+  border-radius: 25px;
+}
+ 
+/* ---------- Projects (Tiles) ---------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+ 
+.project-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+ 
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+ 
+.project-card h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+ 
+.project-card p {
+  font-size: 0.9rem;
+  color: #555;
+  min-height: 40px;
+}
+ 
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+ 
+/* ---------- Utility ---------- */
+.text-center {
+  text-align: center;
+}
+/* ---------- Tables (Items / SOPs) ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+ 
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+ 
+th {
+  background-color: #4f6bed;
+  color: white;
+}
+ 
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+ 
+/* ---------- Forms ---------- */
+form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+ 
+form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+ 
+form input,
+form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+ 
+form button {
+  margin-top: 20px;
+}
+/*Login Screen*/
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #6882ba, #9ac7f5);
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 320px;
+  text-align: center;
+}
+
+.login-box input {
+  width: 100%;
+  margin: 10px, 0;
+  padding: 8px;
+}
+
+.error {
+  color: red;
+}
+
+/*This is for Account drop down which is on the top right of the page*/
+.account-menu {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  display: inline-block;
+}
+
+.account-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.account-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  min-width: 150px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 100;
+}
+
+.account-menu:hover .account-dropdown{
+  display: block;
+}
+
+.account-dropdown p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.account-dropdown .role {
+  color: #666;
+  font-size: 12px;
+}
+
+/*Slider*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: background-color 0.3s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+
+.switch input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.35);
+}
+
+.switch input:disabled + .slider {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
