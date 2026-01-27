@@ -46,66 +46,114 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        /*This is for Account drop down which is on the top right of the page*/
+       
+        .user-administration {
+            position: absolute;
+            bottom: 8px;
+            right: 16px;
+            display: inline-block;
+            text-align: center;
+        }
+
+       .account-dropdown {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            min-width: 180px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            padding: 10px;
+            display: none;
+            z-index: 2000;
+        }
+        
+        .account-dropdown p {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .account-dropdown hr {
+            margin: 8px 0;
+        }
+
         .account-menu {
             position: absolute;
             top: 8px;
             right: 16px;
-            display: inline-block;
-        }
-
-        .account-btn {
-            background: none;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .account-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            min-width: 150px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            z-index: 100;
-        }
-
-        .account-menu:hover .account-dropdown{
-            display: block;
-        }
-
-        .account-dropdown p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .account-dropdown .role {
-            color: #666;
-            font-size: 12px;
+            font-size: 20px;
         }
         
+        .account-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .account-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 8px;
+            background: #d9534f;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background: #c9302c;
+        }   
     </style>
 </head>
 <body>
+
+    <div class="account-menu">
+            <button class="account-btn" type="button" id="accountBtn">👤</button>
+            <div class="account-dropdown" id="accountDropdown">
+                <p th:text="${#authentication.name}"></p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Sign Out</button>
+                </form>
+            </div>
+        </div>
  
 <div class="container">
     <img src="/images/RSEM.png" alt="RSEM Logo" class="logo">
     <h1>RSEM</h1>
     <a href="/projects" class="btn">Go to Projects</a>
-    <div class="account-menu" sec:authorize="isAuthenticated()">
-        <button class="account-btn">👤</button>
-        <div class="account-dropdown">
-            <p><b sec:authentication="name"></b></p>
-            <p class="role" sec:authentication="principal.authorities"></span>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn-logout">Sign Out</button>
-            </form>
+
+    <div class="user-administration" sec:authorize="hasRole('ADMIN')">
+           <a class="btn" href="/admin/users">
+            <span>User</span>
+            <span>Admin</span>
+           </a>
         </div>
-    </div>
 </div>
  
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("accountBtn");
+    const menu = document.getElementById("accountDropdown");
+ 
+    btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    });
+ 
+    document.addEventListener("click", function () {
+        menu.style.display = "none";
+    });
+});
+</script>
 </html>
