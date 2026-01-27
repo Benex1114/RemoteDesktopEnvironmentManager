@@ -1,15 +1,27 @@
 package com.remotemanager.envmanager.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
 public class User {
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_projects", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="project_id")
+    )
+    private Set<Project> projects = new HashSet<>();
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +35,10 @@ public class User {
     @Column(nullable=false)
     private String role;
 
-    //Getters and Setters
     private boolean enabled=true;
 
-    public Long getUserById() {return id;}
+    //Getters and Setters
+    public Long getId() {return id;}
     public void setUserID(Long id) {this.id=id;}
 
     public String getUsername() {return username;}
@@ -42,4 +54,12 @@ public class User {
     public void setEnabled(boolean enabled) {this.enabled=enabled;}
 
     public User() {}
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects=projects;
+    }
 }
