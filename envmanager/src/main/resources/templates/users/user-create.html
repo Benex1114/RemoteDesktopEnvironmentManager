@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create User</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+ 
+<h2>Create User</h2>
+ 
+<form th:action="@{/admin/users/create}" th:object="${user}" method="post">
+ 
+    <label>Username</label>
+    <input type="text" th:field="*{username}" required />
+ 
+    <label>Password</label>
+    <input type="password" name="rawPassword" required />
+ 
+    <label>Role</label>
+    <select id="role" th:field="*{role}">
+        <option value="ADMIN">ADMIN</option>
+        <option value="USER">USER</option>
+    </select>
+ 
+    <label>
+        <input type="checkbox" th:field="*{enabled}" /> Enabled
+    </label>
+ 
+    <!-- PROJECT BLOCK -->
+    <div id="projectSection">
+        <label>Assign Projects</label>
+ 
+        <div th:each="project : ${projects}">
+            <label style="display:block">
+                <input type="checkbox"
+                       name="projectIds"
+                       th:value="${project.id}" />
+                <span th:text="${project.name}"></span>
+            </label>
+        </div>
+    </div>
+ 
+    <button class="btn" type="submit">Create User</button>
+</form>
+ </div>
+</body>
+<script>
+    const roleSelect = document.getElementById("role");
+    const projectSection = document.getElementById("projectSection");
+ 
+    function toggleProjects() {
+        if (roleSelect.value === "USER") {
+            projectSection.style.display = "block";
+        } else {
+            projectSection.style.display = "none";
+        }
+    }
+ 
+    roleSelect.addEventListener("change", toggleProjects);
+    toggleProjects();
+</script>
+</html>
