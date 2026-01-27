@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.remotemanager.envmanager.model.Item;
 import com.remotemanager.envmanager.model.Project;
+import com.remotemanager.envmanager.model.User;
 import com.remotemanager.envmanager.service.ItemService;
 import com.remotemanager.envmanager.service.ProjectService;
+import com.remotemanager.envmanager.service.UserService;
 
 @Controller
 @RequestMapping("/projects")
@@ -25,12 +28,21 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ItemService itemService;
  
     // 1. List all projects
     @GetMapping
-    public String listProjects(Model model) {
+    public String listProjects(Model model, Authentication auth) {
+        User user = userService.findByUsername(auth.getName());
+
+        if ("ADMIN".equals(user.getRole())) {
         model.addAttribute("projects", projectService.getAllProjects());
+        } else {
+            model.addAttribute("projects", user.getProjects());
+        }
         return "projects/projects";
     }
  
