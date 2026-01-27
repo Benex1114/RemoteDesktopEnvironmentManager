@@ -5,22 +5,30 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h2>Projects</h2>
+
+  <nav class="navbar">
+    <div class="nav-left">
+        <a href="/" class="nav-brand">RSEM</a>
+        <a href="/projects" class="nav-link">Home</a>
+    </div>
  
+    <div class="nav-right">
+        <div class="account-menu">
+            <button class="account-btn" type="button" id="accountBtn">👤</button>
+            <div class="account-dropdown" id="accountDropdown">
+                <p th:text="${#authentication.name}"></p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Sign Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<h2>Projects</h2>
 <a class="btn" sec:authorize="hasRole('ADMIN')" href="/projects/new">+ Create Project</a>
  
 <div class="project-grid">
-
-  <div class="account-menu" sec:authorize="isAuthenticated()">
-        <button class="account-btn">👤</button>
-        <div class="account-dropdown">
-            <p><b sec:authentication="name"></b></p>
-            <p class="role" sec:authentication="principal.authorities"></span>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn-logout">Sign Out</button>
-            </form>
-        </div>
-    </div>
   
   <div class="project-card" th:each="project : ${projects}">
     <h3 th:text="${project.name}">Project Name</h3>
@@ -34,6 +42,20 @@
     </div>
   </div>
 </div>
- 
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("accountBtn");
+    const menu = document.getElementById("accountDropdown");
+ 
+    btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    });
+ 
+    document.addEventListener("click", function () {
+        menu.style.display = "none";
+    });
+});
+</script>
 </html>
