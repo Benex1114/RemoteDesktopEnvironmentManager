@@ -5,11 +5,31 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+    <nav class="navbar">
+    <div class="nav-left">
+        <a href="/" class="nav-brand">RSEM</a>
+        <a href="/projects" class="nav-link">Home</a>
+    </div>
+ 
+    <div class="nav-right">
+        <div class="account-menu">
+            <button class="account-btn" type="button" id="accountBtn">👤</button>
+            <div class="account-dropdown" id="accountDropdown">
+                <p th:text="${#authentication.name}"></p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Sign Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
  
 <h2>User Management</h2>
  
-<a th:href="@{/admin/users/new}" class="btn btn-primary">Create User</a>
+<a th:href="@{/admin/users/create}" class="btn btn-primary">Create User</a>
  
+<div class="table-container">
 <table>
     <thead>
         <tr>
@@ -24,16 +44,27 @@
             <td th:text="${u.username}"></td>
             <td th:text="${u.role}"></td>
             <td th:text="${u.enabled ? 'Enabled' : 'Disabled'}"></td>
-            <td>
-                <label class="switch">
-                    <input type="checkbox" th:checked="${u.enabled}">
-                    <span class="slider"></span>
-                </label>
-                <span id="statusText" th:text="${u.enabled} ? 'Enabled' : 'Disabled'"></span>
-            </td>
+            <td> <a class="btn" th:href="@{/admin/users/edit/{id}(id=${u.id})}">Edit</a>
+            <a class="btn-danger" th:href="@{/admin/users/delete/{id}(id=${u.id})}" onclick="return confirm('Are you sure you want to delete this User?');" >Delete</a> </td>
         </tr>
     </tbody>
 </table>
+</div>
  
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("accountBtn");
+    const menu = document.getElementById("accountDropdown");
+ 
+    btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    });
+ 
+    document.addEventListener("click", function () {
+        menu.style.display = "none";
+    });
+});
+</script>
 </html>
