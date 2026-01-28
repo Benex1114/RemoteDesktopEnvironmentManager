@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.remotemanager.envmanager.model.Project;
+import com.remotemanager.envmanager.model.User;
 import com.remotemanager.envmanager.repository.ProjectRepository;
  
 @Service
@@ -29,6 +30,16 @@ public class ProjectService {
     }
  
     public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
+        Project project = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project Not Found"));
+
+        for (User user : project.getUsers()) {
+            user.getProjects().remove(project);
+        }
+        project.getUsers().clear();
+        projectRepository.delete(project);
+    }
+
+    public List<Project> searchProjects(String keyword) {
+        return projectRepository.findByNameContainingIgnoreCase(keyword);
     }
 }
