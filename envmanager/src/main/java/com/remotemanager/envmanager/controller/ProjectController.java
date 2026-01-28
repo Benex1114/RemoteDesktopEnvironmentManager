@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.remotemanager.envmanager.model.Item;
 import com.remotemanager.envmanager.model.Project;
@@ -85,5 +86,11 @@ public class ProjectController {
     public String deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return "redirect:/projects";
+    }
+
+    @GetMapping("/search")
+    public String searchProjects(@RequestParam String keyword, Model model) {
+        model.addAttribute("projects", projectService.searchProjects(keyword));
+        return "projects/projects";
     }
 }
